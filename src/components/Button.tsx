@@ -9,7 +9,7 @@ export const Button = ({ text, onClick }: ButtonProps) => {
     <button
       type="button"
       onClick={onClick}
-      className="w-full cursor-pointer rounded-lg border-b-1 border-b-blue-950 bg-blue-600 px-4 py-3 text-sm text-white transition duration-300 ease-in-out hover:bg-blue-900"
+      className="w-full cursor-pointer rounded-md border-b-1 border-b-blue-950 bg-blue-600 px-4 py-3 text-sm text-white transition duration-300 ease-in-out hover:bg-blue-900"
     >
       {text}
     </button>
