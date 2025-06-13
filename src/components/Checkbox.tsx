@@ -30,13 +30,13 @@ export const Checkbox = ({ id, label, checked, onChange }: CheckboxProps) => {
       {/* Blue square */}
       <span
         className={clsx(
-          'pointer-events-none absolute left-0.75 h-2.5 w-2.5 bg-blue-500',
+          'pointer-events-none absolute left-0.75 h-2.5 w-2.5 bg-blue-600',
           checked ? 'block' : 'hidden'
         )}
       />
       {/* Label */}
       <span
-        className={clsx('text-sm', checked ? 'text-blue-500' : 'text-gray-600')}
+        className={clsx('text-sm', checked ? 'text-blue-600' : 'text-gray-600')}
       >
         {label}
       </span>

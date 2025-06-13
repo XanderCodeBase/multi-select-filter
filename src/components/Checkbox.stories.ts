@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox } from './Checkbox.tsx';
 
 const meta = {
-  title: 'Checkbox',
+  title: 'Components/Checkbox',
   component: Checkbox,
 } satisfies Meta<typeof Checkbox>;
 
