@@ -1,54 +1,97 @@
-# React + TypeScript + Vite
+# Multi-Select Filter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based application with a multi-select filter component, built using Vite, TypeScript, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Table of Contents
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Running the App](#running-the-app)
+  - [Development](#development)
+  - [Building for Production](#building-for-production)
+  - [Previewing the Production Build](#previewing-the-production-build)
+  - [Running Tests](#running-tests)
+  - [Linting](#linting)
+  - [Storybook](#storybook)
+- [Dependencies](#dependencies)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview
+This project is a multi-select filter component built with React, TypeScript, and Vite. It uses modern tools like Tailwind CSS for styling, Vitest for testing, and Storybook for component development.
 
-## Expanding the ESLint configuration
+## Prerequisites
+- **Node.js**: Version 18 or later recommended
+- **npm**: Included with Node.js (Yarn or pnpm can also be used)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/XanderCodeBase/multi-select-filter
+   cd multi-select-filter
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Running the App
+
+### Development
+To start the development server with hot reloading:
+```bash
+npm run dev
+```
+Open `http://localhost:5173` (or the port shown in the console) in your browser.
+
+### Building for Production
+To build the app for production:
+```bash
+npm run build
+```
+This compiles TypeScript and builds optimized assets in the `dist` folder.
+
+### Previewing the Production Build
+To preview the production build locally:
+```bash
+npm run preview
+```
+This serves the built assets, typically at `http://localhost:4173`.
+
+### Running Tests
+- Run tests once:
+  ```bash
+  npm run test
+  ```
+- Run tests in watch mode:
+  ```bash
+  npm run test:watch
+  ```
+
+### Linting
+To check code quality with ESLint:
+```bash
+npm run lint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Storybook
+To run Storybook for component development:
+```bash
+npm run storybook
 ```
+Access it at `http://localhost:6006`.
+
+To build Storybook for deployment:
+```bash
+npm run build-storybook
+```
+
+## Dependencies
+Key dependencies include:
+- **React** and **React DOM** (`^19.1.0`)
+- **TypeScript** (`~5.8.3`)
+- **Vite** (`^6.3.5`) for fast builds
+- **Tailwind CSS** (`^4.1.10`) for styling
+- **Vitest** (`^3.2.3`) for testing
+- **Storybook** (`^9.0.8`) for component development
+- **ESLint** (`^9.28.0`) and **Prettier** (`^3.5.3`) for code quality
+
+See `package.json` for the full list.
