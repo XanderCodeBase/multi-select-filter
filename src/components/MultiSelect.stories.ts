@@ -1,17 +1,35 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { MultiSelect } from './MultiSelect.tsx';
+import { MultiSelect } from './MultiSelect';
 
 const meta = {
-  title: 'MultiSelect',
+  title: 'Components/MultiSelect',
   component: MultiSelect,
 } satisfies Meta<typeof MultiSelect>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const MultiSelectFilter: Story = {
+const fruitOptions: string[] = [
+  'Apple',
+  'Banana',
+  'Orange',
+  'Grapes',
+  'Pineapple',
+  'Strawberry',
+  'Mango',
+  'Blueberry',
+  'Watermelon',
+  'Peach',
+  'Kiwi',
+  'Cherry',
+  'Papaya',
+  'Lemon',
+  'Pomegranate',
+];
+
+export const Default: Story = {
   args: {
-    label: 'MultiSelect',
+    options: fruitOptions,
   },
 };

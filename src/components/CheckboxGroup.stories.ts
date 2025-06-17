@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { CheckboxGroup, type CheckboxOption } from './CheckboxGroup';
+import { CheckboxGroup } from './CheckboxGroup';
 
 const meta = {
   title: 'Components/Checkbox/Group',
@@ -10,22 +10,23 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const fruitOptions: CheckboxOption[] = [
-  { label: 'Apple', value: 'Apple' },
-  { label: 'Banana', value: 'Banana' },
-  { label: 'Orange', value: 'Orange' },
-  { label: 'Grapes', value: 'Grapes' },
-  { label: 'Pineapple', value: 'Pineapple' },
-  { label: 'Strawberry', value: 'Strawberry' },
-  { label: 'Mango', value: 'Mango' },
+const fruitOptions: string[] = [
+  'Apple',
+  'Banana',
+  'Orange',
+  'Grapes',
+  'Pineapple',
+  'Strawberry',
+  'Mango',
 ];
 
 export const Default: Story = {
   args: {
     options: fruitOptions,
+    filteredValues: fruitOptions,
     selectedValues: [],
-    onChange: (values: string[]) => {
-      console.log('Selected values:', values);
+    handleCheckboxChange: (value: string, checked: boolean) => {
+      console.log('Is checked:', value, checked);
     },
   },
 };
@@ -33,9 +34,21 @@ export const Default: Story = {
 export const WithSelectedValues: Story = {
   args: {
     options: fruitOptions,
+    filteredValues: fruitOptions,
     selectedValues: ['Apple', 'Orange', 'Mango'],
-    onChange: (values: string[]) => {
-      console.log('Updated values:', values);
+    handleCheckboxChange: (value: string, checked: boolean) => {
+      console.log('Is checked:', value, checked);
+    },
+  },
+};
+
+export const WithFilteredValues: Story = {
+  args: {
+    options: fruitOptions,
+    filteredValues: ['Apple', 'Orange', 'Mango'],
+    selectedValues: ['Orange'],
+    handleCheckboxChange: (value: string, checked: boolean) => {
+      console.log('Is checked:', value, checked);
     },
   },
 };

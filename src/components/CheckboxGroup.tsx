@@ -1,34 +1,23 @@
 import { Checkbox } from './Checkbox';
 
-export interface CheckboxOption {
-  label: string;
-  value: string;
-}
-
 interface CheckboxGroupProps {
-  options: CheckboxOption[];
+  options: string[];
+  filteredValues: string[];
   selectedValues: string[];
-  onChange: (updatedValues: string[]) => void;
+  handleCheckboxChange: (value: string, checked: boolean) => void;
 }
 
 // CheckboxGroup component that renders a list of styled checkboxes
 export const CheckboxGroup = ({
   options,
+  filteredValues,
   selectedValues,
-  onChange,
+  handleCheckboxChange,
 }: CheckboxGroupProps) => {
-  const handleCheckboxChange = (value: string, checked: boolean) => {
-    if (checked) {
-      onChange([...selectedValues, value]);
-    } else {
-      onChange(selectedValues.filter(v => v !== value));
-    }
-  };
-
-  // Sort options where checked first
+  // Sort options, checked first
   const sortedOptions = [...options].sort((a, b) => {
-    const aChecked = selectedValues.includes(a.value);
-    const bChecked = selectedValues.includes(b.value);
+    const aChecked = selectedValues.includes(a);
+    const bChecked = selectedValues.includes(b);
     return Number(bChecked) - Number(aChecked);
   });
 
@@ -36,11 +25,11 @@ export const CheckboxGroup = ({
     <div className="space-y-2">
       {sortedOptions.map(option => (
         <Checkbox
-          key={option.value}
-          id={option.value}
-          label={option.label}
-          checked={selectedValues.includes(option.value)}
-          onChange={checked => handleCheckboxChange(option.value, checked)}
+          key={option}
+          value={option}
+          hidden={!filteredValues.includes(option)}
+          checked={selectedValues.includes(option)}
+          onChange={checked => handleCheckboxChange(option, checked)}
         />
       ))}
     </div>
