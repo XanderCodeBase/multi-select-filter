@@ -1,6 +1,8 @@
+import type { MouseEventHandler } from 'react';
+
 type ButtonProps = {
   label: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
 // Button component that renders a styled blue submit button

@@ -1,5 +1,5 @@
 import { sortCheckedFirst } from '../util/sortCheckedFirst.ts';
-import { Checkbox } from './Checkbox';
+import { Checkbox } from './index.ts';
 
 interface CheckboxGroupProps {
   options: string[];
@@ -19,7 +19,7 @@ export const CheckboxGroup = ({
   // Sort options, checked first
   const sortedOptions = sortCheckedFirst(options, selectedValues);
 
-  //
+  // Divider variables
   let hasChecked = false,
     dividerRendered = false;
 

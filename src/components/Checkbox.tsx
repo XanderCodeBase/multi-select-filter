@@ -1,3 +1,5 @@
+import type { ChangeEvent } from 'react';
+
 import clsx from 'clsx';
 
 export const CHECKBOXES = 'checkboxes';
@@ -16,7 +18,7 @@ export const Checkbox = ({
   checked,
   onChange,
 }: CheckboxProps) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.checked);
   };
 

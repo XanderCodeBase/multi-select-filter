@@ -1,7 +1,6 @@
 import { useFilterCheckboxChange } from '../hooks/useFilterCheckboxChange.ts';
 import { useHandleCheckboxChange } from '../hooks/useHandleCheckboxChange.ts';
-import { CheckboxGroup } from './CheckboxGroup.tsx';
-import { Input } from './Input.tsx';
+import { CheckboxGroup, Input } from './index.ts';
 
 type MultiSelectProps = {
   options: string[];
@@ -28,10 +27,7 @@ export const MultiSelect = ({ options }: MultiSelectProps) => {
         </p>
       </div>
 
-      <Input
-        text="Zoek op ..."
-        onChange={event => setQuery(event.target.value)}
-      />
+      <Input text="Zoek op ..." onChange={(value: string) => setQuery(value)} />
 
       <div className="max-h-52 min-h-52 overflow-y-auto">
         <CheckboxGroup
