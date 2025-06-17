@@ -1,6 +1,5 @@
-import { useFilterCheckboxChange } from '../hooks/useFilterCheckboxChange.ts';
-import { useHandleCheckboxChange } from '../hooks/useHandleCheckboxChange.ts';
-import { CheckboxGroup, Input } from './index.ts';
+import { useFilterCheckboxChange, useHandleCheckboxChange } from '../hooks';
+import { CheckboxGroup, Input } from './index';
 
 type MultiSelectProps = {
   options: string[];

@@ -1,4 +1,4 @@
-import { sortCheckedFirst } from '../util/sortCheckedFirst.ts';
+import { sortCheckedFirst } from '../util';
 import { Checkbox } from './index.ts';
 
 interface CheckboxGroupProps {
