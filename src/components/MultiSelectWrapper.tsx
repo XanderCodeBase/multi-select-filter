@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { MultiSelect } from './components/MultiSelect.tsx';
-import { useFetchCheckboxOptions } from './hooks/useFetchCheckboxOptions.ts';
+import { useFetchCheckboxOptions } from '../hooks/useFetchCheckboxOptions.ts';
+import { MultiSelect } from './MultiSelect.tsx';
 
 function ErrorFallback({ error }: { error: Error }) {
   return <p className="text-red-600">Error: {error.message}</p>;

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { MultiSelectWrapper } from './MultiSelectWrapper.tsx';
 import { Button } from './components/Button.tsx';
 import { CHECKBOXES } from './components/Checkbox.tsx';
+import { MultiSelectWrapper } from './components/MultiSelectWrapper.tsx';
 
 // Main component that renders a form and displays selected options
 function App() {
