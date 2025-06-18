@@ -22,6 +22,7 @@ export function useHandleCheckboxChange() {
   const handleCheckboxChange = useCallback(
     (value: string, checked: boolean) =>
       setSelectedValues(prev => {
+        // Utilize Set to ensure unique values and optimize lookup performance
         const set = new Set(prev);
         if (checked) {
           if (set.has(value)) return prev; // Early return if value exists

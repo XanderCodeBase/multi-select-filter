@@ -24,6 +24,8 @@ function App() {
         <MultiSelectWrapper />
         <Button label="Toepassen" />
       </form>
+
+      {/* Renders the form submission results in a formatted JSON view */}
       <pre className="m-10">{JSON.stringify(selectedOptions, null, 2)}</pre>
     </>
   );

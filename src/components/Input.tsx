@@ -10,7 +10,7 @@ type InputProps = {
 // Input component that renders a styled input field with a search icon
 export const Input = ({ text, onChange }: InputProps) => {
   return (
-    <div className="relative w-full">
+    <div className="relative">
       <input
         id="Input"
         name="Input"

@@ -12,7 +12,7 @@ export const MultiSelect = ({ options }: MultiSelectProps) => {
 
   return (
     <div className="relative space-y-6">
-      {/* show counts */}
+      {/* show counts for total selected and filtered items */}
       <div>
         <p className="absolute -top-5 right-0 space-x-2 text-sm text-gray-400 sm:-top-11">
           <span>Total: {options.length}</span>
