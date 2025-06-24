@@ -9,8 +9,8 @@ function ErrorFallback({ error }: { error: Error }) {
 }
 
 function OptionsLoader() {
-  const { data: options = [], isError, error } = useFetchCheckboxOptions();
-  if (isError && error) throw error;
+  const { data: options = [], error } = useFetchCheckboxOptions();
+  if (error) throw error;
 
   return <MultiSelect options={options} />;
 }

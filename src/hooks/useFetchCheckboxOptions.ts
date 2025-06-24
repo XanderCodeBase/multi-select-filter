@@ -1,25 +1,33 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { gql, useQuery } from '@apollo/client';
 import he from 'he';
 
-const URL = '/data/items.json';
+export const GET_STRINGS = gql`
+  query GetStrings {
+    items
+  }
+`;
 
-const fetchOptions = async (): Promise<string[]> => {
-  const response = await axios.get(URL);
+// Hook to fetch checkbox options
+export const useFetchCheckboxOptions = () => {
+  const { loading, error, data } = useQuery(GET_STRINGS);
 
   // Validate response is JSON and an array of strings
-  if (typeof response.data !== 'object' || !Array.isArray(response.data.data)) {
-    throw new Error(`Invalid response format: ${response.data}`);
+  if (data && !Array.isArray(data.items)) {
+    return {
+      loading,
+      error: new Error('Invalid response format: items is not an array'),
+      data: [],
+    };
   }
 
   // HTML decode strings and return
-  return response.data.data.map((item: string) => he.decode(item));
-};
+  const options = data?.items
+    ? data.items.map((item: string) => he.decode(item))
+    : [];
 
-// Hook to fetch checkbox options
-export const useFetchCheckboxOptions = () =>
-  useQuery({
-    queryKey: ['checkbox-options'],
-    queryFn: fetchOptions,
-    retry: false,
-  });
+  return {
+    loading,
+    error,
+    data: options,
+  };
+};

@@ -1,6 +1,6 @@
 # Multi-Select Filter
 
-A React-based application with a multi-select filter component, built using Vite, TypeScript, and Tailwind CSS.
+A React-based application with a multi-select filter component, built using Vite, TypeScript, Tailwind CSS, and Apollo GraphQL for data fetching.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -17,7 +17,7 @@ A React-based application with a multi-select filter component, built using Vite
 - [Dependencies](#dependencies)
 
 ## Overview
-This project is a multi-select filter component built with React, TypeScript, and Vite. It uses modern tools like Tailwind CSS for styling, Vitest for testing, and Storybook for component development.
+This project is a multi-select filter component built with React, TypeScript, and Vite. It leverages Apollo GraphQL for both client-side queries and server-side data management, Tailwind CSS for styling, Vitest for testing, and Storybook for component development.
 
 ## Design decisions
 
@@ -33,20 +33,31 @@ To ensure simplicity, form integrity, and compatibility with native form behavio
 - **State Decoupling**: Avoids complex syncing logic between the visual layer (filtered view) and application state. The DOM acts as the single source of truth.
 - **Simplicity**: Keeps the form logic lean and closer to standard HTML behavior, making the component more predictable and maintainable.
 
-### 2. **Localized Data Fetching in a MultiSelectWrapper Component**
+### 2. **GraphQL Data Fetching with Apollo Client in MultiSelectWrapper Component**
 
-To promote simplicity and reusability, the data required for rendering the checkboxes is fetched within a wrapper component located close to the rendering of the checkbox list and the search input.
+To promote simplicity and reusability, the data required for rendering the checkboxes is fetched using Apollo Client within a wrapper component located close to the rendering of the checkbox list and the search input.
 
-- `useFetchCheckboxOptions`: This hook fetches the checkbox options keeping the data-fetching logic isolated and reusable.
+- `useFetchCheckboxOptions`: This hook uses Apollo Client to execute GraphQL queries, fetching checkbox options while keeping the data-fetching logic isolated and reusable.
 
 #### ✅ Why this approach?
 
-- **Component Reusability**: Encapsulating the data-fetching logic within a dedicated wrapper keeps the multi-select filter self-contained and modular, making it easy to reuse or relocate without external dependencies.
-- **Simplicity**: Keeping data loading logic close to where the data is used reduces cognitive overhead and makes the component easier to understand and maintain.
-- **Avoids Prop Drilling**: By fetching the data locally, there's no need to pass data down from higher-level components, which can complicate the app structure.
-- **Separation of Concerns**: This approach ensures that each component has a clear and focused responsibility — the wrapper handles data loading, and the child handles rendering and interaction.
+- **Component Reusability**: Encapsulating GraphQL queries within a dedicated wrapper keeps the multi-select filter self-contained and modular, making it easy to reuse or relocate without external dependencies.
+- **Simplicity**: Keeping data fetching logic close to where the data is used reduces cognitive overhead and makes the component easier to understand and maintain.
+- **Avoids Prop Drilling**: By fetching data locally with Apollo Client, there's no need to pass data down from higher-level components, simplifying the app structure.
+- **Separation of Concerns**: The wrapper handles GraphQL data fetching, while the child components focus on rendering and interaction.
+- **Apollo Benefits**: Apollo Client provides caching, optimistic UI updates, and robust error handling, improving performance and user experience.
 
-### 3. **Separation of Concerns Using Custom Hooks for Filtering and Selection**
+### 3. **Apollo Server for Backend Data Management**
+
+The backend uses Apollo Server to serve GraphQL APIs. This allows for flexible and efficient data retrieval tailored to the needs of the multi-select filter component.
+
+#### ✅ Why this approach?
+
+- **Flexible Queries**: GraphQL allows the client to request only the data it needs, reducing over- or under-fetching compared to REST.
+- **Single Endpoint**: Simplifies API management by using a single GraphQL endpoint.
+- **Scalability**: Apollo Server's schema-driven approach makes it easier to evolve the API as the application grows.
+
+### 4. **Separation of Concerns Using Custom Hooks for Filtering and Selection**
 
 To keep logic clean, modular, and testable, the `MultiSelect` component leverages two custom hooks to manage **selection** and **filtering** independently:
 
@@ -62,15 +73,15 @@ This separation of concerns improves maintainability and makes for easy testing 
 - **Persistence**: `useHandleCheckboxChange` stores selected values in `localStorage`, ensuring the UI state persists across reloads.
 - **Clean Component Logic**: The `MultiSelect` component focuses solely on rendering and UI interaction, offloading logic to hooks.
 
-### 4. **Simple and Clear Naming**
+### 5. **Simple and Clear Naming**
 
 Component and hook names are kept short and descriptive (e.g., `Button` instead of `PrimaryButton`) to match the simplicity and scope of the project.
 
-### 5. **TailwindCSS with Default Styling**
+### 6. **TailwindCSS with Default Styling**
 
 Standard TailwindCSS utility classes were used without heavy customization to keep the styling simple and functional, as the focus was on functionality over pixel-perfect design due to the absence of a detailed design specification.
 
-### 6. **User Feedback via Counters (total, selected, and filtered items)**
+### 7. **User Feedback via Counters (total, selected, and filtered items)**
 
 To improve usability and compensate for design limitations, three counters were added: total items, selected items, and currently filtered items. These provide real-time feedback to users on the state of their selection.
 
@@ -100,6 +111,12 @@ To start the development server with hot reloading:
 npm run dev
 ```
 Open `http://localhost:5173` (or the port shown in the console) in your browser.
+
+To start the Apollo Server separately:
+```bash
+npm run server
+```
+Open `http://localhost:4000/graphql` in your browser for the Apollo Server Sandbox.
 
 ### Building for Production
 To build the app for production:
@@ -149,6 +166,8 @@ Key dependencies include:
 - **TypeScript** (`~5.8.3`)
 - **Vite** (`^6.3.5`) for fast builds
 - **Tailwind CSS** (`^4.1.10`) for styling
+- **Apollo Client** (`^3.13.8`) for GraphQL queries
+- **Apollo Server** (`^4.12.2`) for GraphQL backend
 - **Vitest** (`^3.2.3`) for testing
 - **Storybook** (`^9.0.8`) for component development
 - **ESLint** (`^9.28.0`) and **Prettier** (`^3.5.3`) for code quality

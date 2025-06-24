@@ -1,69 +1,91 @@
 import type { ReactNode } from 'react';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MockedProvider, type MockedResponse } from '@apollo/client/testing';
 import { renderHook, waitFor } from '@testing-library/react';
-import axios from 'axios';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { useFetchCheckboxOptions } from './useFetchCheckboxOptions.ts';
+import { GET_STRINGS } from './useFetchCheckboxOptions.ts';
 
-vi.mock('axios');
-
-// Create a wrapper component to provide QueryClient
-const createWrapper = () => {
-  const queryClient = new QueryClient({
-    defaultOptions: { queries: { retry: false } },
-  });
-
+// Create a wrapper component to provide Apollo Client
+const createWrapper = (mocks: MockedResponse[] = []) => {
   const Wrapper = ({ children }: { children: ReactNode }) => (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <MockedProvider mocks={mocks} addTypename={false}>
+      {children}
+    </MockedProvider>
   );
-  Wrapper.displayName = 'QueryClientWrapper';
+  Wrapper.displayName = 'ApolloMockedProvider';
 
   return Wrapper;
 };
 
-describe('useCheckboxOptions', () => {
+describe('useFetchCheckboxOptions', () => {
   const mockOptions = ['Apple', 'Banana', 'Orange'];
 
   it('should fetch and decode options successfully', async () => {
-    vi.mocked(axios.get).mockResolvedValueOnce({
-      data: { data: ['Apple', 'Banana', 'Orange'] },
-    });
+    const mocks = [
+      {
+        request: {
+          query: GET_STRINGS,
+        },
+        result: {
+          data: {
+            items: mockOptions,
+          },
+        },
+      },
+    ];
 
     const { result } = renderHook(() => useFetchCheckboxOptions(), {
-      wrapper: createWrapper(),
+      wrapper: createWrapper(mocks),
     });
 
-    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    await waitFor(() => expect(result.current.loading).toBe(false));
 
     expect(result.current.data).toEqual(mockOptions);
-    expect(axios.get).toHaveBeenCalledWith('/data/items.json');
+    expect(result.current.error).toBeUndefined();
   });
 
   it('should handle bad request error', async () => {
     const errorMessage = 'Bad Request';
-    vi.mocked(axios.get).mockRejectedValueOnce(new Error(errorMessage));
+    const mocks = [
+      {
+        request: {
+          query: GET_STRINGS,
+        },
+        error: new Error(errorMessage),
+      },
+    ];
 
     const { result } = renderHook(() => useFetchCheckboxOptions(), {
-      wrapper: createWrapper(),
+      wrapper: createWrapper(mocks),
     });
 
-    await waitFor(() => expect(result.current.isError).toBe(true));
+    await waitFor(() => expect(result.current.loading).toBe(false));
 
     expect(result.current.error).toBeInstanceOf(Error);
     expect(result.current.error?.message).toBe(errorMessage);
   });
 
   it('should handle invalid response format', async () => {
-    const invalidData = { invalid: 'not an array' };
-    vi.mocked(axios.get).mockResolvedValueOnce({ data: invalidData });
+    const mocks = [
+      {
+        request: {
+          query: GET_STRINGS,
+        },
+        result: {
+          data: {
+            items: 'not an array', // Invalid format
+          },
+        },
+      },
+    ];
 
     const { result } = renderHook(() => useFetchCheckboxOptions(), {
-      wrapper: createWrapper(),
+      wrapper: createWrapper(mocks),
     });
 
-    await waitFor(() => expect(result.current.isError).toBe(true));
+    await waitFor(() => expect(result.current.loading).toBe(false));
 
     expect(result.current.error).toBeInstanceOf(Error);
     expect(result.current.error?.message).toContain('Invalid response format');

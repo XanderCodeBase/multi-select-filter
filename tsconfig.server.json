@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "NodeNext",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "lib": ["ES2020"],
+    "moduleResolution": "NodeNext",
+    "noEmitOnError": true
+  },
+  "include": ["src/server.ts"], // Only compile server.ts
+  "exclude": ["node_modules", "src/**/*.{tsx,jsx,test,spec}.{ts,tsx}"] // Exclude frontend and test files
+}
