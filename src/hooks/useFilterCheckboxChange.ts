@@ -1,4 +1,6 @@
-import { useMemo, useState } from 'react';
+'use client';
+
+import { useState } from 'react';
 
 // Hook that manages checkbox filtering based on query input
 // Returns all values when no query is set
@@ -6,11 +8,10 @@ import { useMemo, useState } from 'react';
 export function useFilterCheckboxChange(options: string[] = []) {
   const [query, setQuery] = useState('');
 
-  const filteredValues = useMemo(() => {
-    if (!query || query.trim() === '') return options;
-
-    return options.filter(option => option.startsWith(query.trim()));
-  }, [options, query]);
+  const filteredValues =
+    !query || query.trim() === ''
+      ? options
+      : options.filter(option => option.startsWith(query.trim()));
 
   return { filteredValues, setQuery };
 }

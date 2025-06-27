@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+'use client';
+
+import { useEffect, useState } from 'react';
 
 const LOCAL_STORAGE_KEY = 'checkbox_group_selected_values';
 
@@ -19,21 +21,18 @@ export function useHandleCheckboxChange() {
   );
 
   // Handle changes in checked state and update selectedValues
-  const handleCheckboxChange = useCallback(
-    (value: string, checked: boolean) =>
-      setSelectedValues(prev => {
-        // Utilize Set to ensure unique values and optimize lookup performance
-        const set = new Set(prev);
-        if (checked) {
-          if (set.has(value)) return prev; // Early return if value exists
-          set.add(value);
-        } else {
-          set.delete(value);
-        }
-        return [...set];
-      }),
-    []
-  );
+  const handleCheckboxChange = (value: string, checked: boolean) =>
+    setSelectedValues(prev => {
+      // Utilize Set to ensure unique values and optimize lookup performance
+      const set = new Set(prev);
+      if (checked) {
+        if (set.has(value)) return prev; // Early return if value exists
+        set.add(value);
+      } else {
+        set.delete(value);
+      }
+      return [...set];
+    });
 
   return { selectedValues, handleCheckboxChange };
 }

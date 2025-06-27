@@ -1,23 +1,21 @@
-import { useState } from 'react';
+import { useActionState } from 'react';
 
 import { Button, CHECKBOXES, MultiSelectWrapper } from './components';
 
 // Main component that renders a form and displays selected options
 function App() {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const selected = new FormData(event.currentTarget).getAll(
-      CHECKBOXES
-    ) as string[];
-    setSelectedOptions(selected);
-  };
+  const [selectedOptions, formAction] = useActionState(
+    async (_: string[], formData: FormData): Promise<string[]> => {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      return formData.getAll(CHECKBOXES) as string[];
+    },
+    []
+  );
 
   return (
     <>
       <form
-        onSubmit={handleSubmit}
+        action={formAction}
         className="m-10 max-w-md space-y-6 rounded-md border border-gray-300 bg-gray-50 p-6"
       >
         <p className="text-gray-600">Productgroup</p>
